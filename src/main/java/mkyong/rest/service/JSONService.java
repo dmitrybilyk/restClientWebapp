@@ -27,30 +27,30 @@ public class JSONService {
 		TrackClient track = new TrackClient();
 		track.setTitle("Dimon");
 		track.setSinger("Metallica from client");
-
-		Client client = Client.create();
-
-		WebResource webResource = client
-						.resource("http://localhost:8080/rest/json/metallica/post/entity");
-
-		TrackClient input = new TrackClient();
-		input.setSinger("dima");
-		input.setTitle("best");
-
-		ObjectMapper objectMapper = new ObjectMapper();
-		String inputJson = objectMapper.writeValueAsString(input);
-
-		ClientResponse response = webResource.type("application/json")
-						.post(ClientResponse.class, inputJson);
-
-		if (response.getStatus() != 201) {
-			throw new RuntimeException("Failed : HTTP error code : "
-							+ response.getStatus());
-		}
-
-		System.out.println("Output from Server .... \n");
-		String output = response.getEntity(String.class);
-		System.out.println(output);
+//
+//		Client client = Client.create();
+//
+//		WebResource webResource = client
+//						.resource("http://localhost:8080/rest/json/metallica/post/entity");
+//
+//		TrackClient input = new TrackClient();
+//		input.setSinger("dima");
+//		input.setTitle("best");
+//
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		String inputJson = objectMapper.writeValueAsString(input);
+//
+//		ClientResponse response = webResource.type("application/json")
+//						.post(ClientResponse.class, inputJson);
+//
+//		if (response.getStatus() != 201) {
+//			throw new RuntimeException("Failed : HTTP error code : "
+//							+ response.getStatus());
+//		}
+//
+//		System.out.println("Output from Server .... \n");
+//		String output = response.getEntity(String.class);
+//		System.out.println(output);
 
 		return track;
 
