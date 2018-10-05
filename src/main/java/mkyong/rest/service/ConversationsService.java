@@ -20,11 +20,6 @@ public class ConversationsService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Conversation> getTrackInJSON() throws IOException {
 
-		Conversation conversation = new Conversation("1010", "asdf", "0504759475", "dmitry.bilyk@gmail.com");
-		DB.conversationMap.put(conversation.getSubevaluationId(), conversation);
-		Conversation conversation2 = new Conversation("1011", "asdf", "0504759476", "dmitry.bilyk@gmail.com");
-		DB.conversationMap.put(conversation2.getSubevaluationId(), conversation);
-
 		return DB.conversationMap.values();
 	}
 
@@ -34,7 +29,7 @@ public class ConversationsService {
 	public Response createTrackInJSON(Conversation conversation) {
 
 		DB.conversationMap.put(conversation.getSubevaluationId(), conversation);
-		return Response.status(201).entity("Conversation is saved").build();
+		return Response.status(201).entity("Conversation is saved successfully").build();
 
 	}
 
