@@ -3,6 +3,7 @@ package mkyong.rest.service;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import mkyong.Result;
 import mkyong.Survey;
 import mkyong.rest.client.Conversation;
 
@@ -10,16 +11,20 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 @Path("/conversations")
 public class ConversationsService {
+	private static List<Result> resultList = new ArrayList<Result>();
 
 	@GET
 	@Path("/get")
@@ -66,15 +71,36 @@ public class ConversationsService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getNewSurveys() {
-		Random rand = new Random();
+// Obtain a number between [0 - 49].
+			return Response.status(200).entity(Arrays.asList(getSurvey(), getSurvey())).build();
+	}
 
+	private Survey getSurvey() {
+		Random random = new Random();
 		Survey survey = new Survey();
-		int surveyId = rand.nextInt(500000);
+		int surveyId = random.nextInt(500000);
 		survey.setSurveyId(surveyId);
 		survey.setId(surveyId);
 		survey.setContact("dmitry.bilyk@gmail.com");
-// Obtain a number between [0 - 49].
-			return Response.status(200).entity(Arrays.asList(survey)).build();
+		return survey;
+	}
+
+	@GET
+	@Path("/result/{id}/{result}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response handleResult(@PathParam("id") String id,
+	                             @PathParam("result") String result) {
+		Result result1 = new Result(id, result);
+		resultList.add(result1);
+		return Response.status(200).entity(result1).build();
+	}
+
+	@GET
+	@Path("/results")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getResults() {
+		return Response.status(200).entity(resultList).build();
 	}
 
 }
